@@ -1,0 +1,58 @@
+{% extends 'navbar.html' %}
+
+{% block body %}
+<table class="responsive-table table table-bordered table-responsive" id="history-table " >
+    <thead  style="background-color: rgb(182, 182, 175);">
+        <tr>
+            <th><input type="checkbox" id="selectAll"></th>
+            <th class="text-center">S No:</th>
+            <th class="text-center">Image Name</th>
+            <th class="text-center">Text</th>
+            <th class="text-center">Model Used</th>
+        </tr>
+    </thead>
+    <tbody>
+        <form action="{{ url_for('user.delete_history') }}" method="post" id="history-table">
+            {% for message in messages %}
+                <tr style="background-color: rgb(216, 215, 181);  font-size:x-large " id="td">
+                    <td><input type="checkbox" name="checkbox" value="{{ message.id }}"></td>
+                    <td class="text-center">{{ loop.index }}</td>
+                    <td class="text-center"> <a href="{{ url_for('static', filename='uploads/'+ message.image_name  ) }}" style="text-decoration:none;">{{ message.image_name }}</a></td>
+                    
+                <td class="text-center"><a href="{{ url_for('user.upload', id=message.id) }}" style="text-decoration:none;"> ......{{ message.text_modified[:70] }}</a></td>
+                <td class="text-center"><h4>{{ message.model_used }}</h4></td>
+            </tr>
+        {% endfor %}
+    </tbody>
+
+    <button type="submit" id="delbutton" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?');">Delete</button>
+
+</form>
+</table>
+
+<script>
+
+    $("#selectAll").click(function () {
+        $("input[type='checkbox']").prop('checked', $(this).prop('checked'));
+    });
+
+    $("#deleteButton").click(function(e) {
+        var checked = $("input[name='checkbox']:checked").length;
+        if (checked == 0) {
+            e.preventDefault();
+            alert("Please select a file to delete.");
+            return false;
+        } else {
+            var confirmDelete = confirm("Are you sure you want to delete the selected file(s)?");
+            if (!confirmDelete) {
+                e.preventDefault();
+                return false;
+            }
+        }
+    });
+
+</script>
+
+
+
+{% endblock %}

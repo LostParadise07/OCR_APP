@@ -1,0 +1,120 @@
+﻿{% extends "navbar.html" %}
+{% block head %}
+<script src="https://cdn.jsdelivr.net/spin.js/2.3.2/spin.min.js"></script>
+{% endblock %}
+{% block body %}
+  <div class="align-items-center container1">
+      <div class="wrapper wrapper1" style="background-color: rgb(105, 105, 105); color:white;" >
+        <ul>
+          <li>
+            Files may be uploaded in the following formats :
+            <ul>
+              <li>Image formats: jpeg, png, jpg</li>
+              <li>PDF format</li>
+            </ul>
+          </li>
+          <li>
+            Pdf Size will be limited to 5MB
+          </li>
+          <li>
+            No of pages in pdf will be limited to 10
+          </li>
+        </ul>
+      </div>
+  </div>
+  <div id="cont" class="container" style="margin-top: 10px;">
+    <form id="formm" method="POST" enctype="multipart/form-data">
+  
+      <div class="form-group my-4">
+        {{ form.hidden_tag()}}
+        {{ form.file.label(class="form-label", id="to-center") }}
+        {% if form.file.errors %}
+          {{ form.file(class="form-control is-invalid") }}
+          {% for error in form.file.errors %}
+            <span class="invalid-feedback">{{ error }}</span>
+          {% endfor %}
+        {% else %}
+          {{ form.file(class="form-control", id="fileInput", onchange="previewFile()") }}
+        {% endif %}
+      </div>
+  
+      <div class="form-group my-4">
+        {{ form.select(class="form-control", id="select") }}
+      </div>
+  
+      <div class="form-group my-4">
+        {{ form.submit(class="btn btn-primary", id="uploadd", onclick="showSpinner(event)") }}
+      </div>
+  
+    </form>
+  
+    <img id="imagePreview" style="width:300px;">
+    <iframe id="pdfPreview" style="width:340px; height:370px"></iframe>
+  
+    <!-- Spinner modal -->
+    <div id="spinnerModal" class="modall">
+      <div class="modall-content">
+        <div class="spinner"></div>
+        <p id="spinnerText">This May take A While.....</p>
+      </div>
+    </div>
+  
+  </div>
+  
+        
+        <script>
+          function showSpinner(event) {
+            var fileInput = document.getElementById("fileInput");
+            var select = document.getElementById("select");
+            
+            // Check if both fields have a value
+            if (fileInput.value && select.value) {
+              var modal = document.getElementById("spinnerModal");
+              modal.style.display = "block";
+              
+              var form = document.getElementById("formm");
+              form.submit(); // submit the form
+            }
+          }
+          
+        
+          // Hide modal when clicking outside of it
+          window.onclick = function(event) {
+            var modal = document.getElementById("spinnerModal");
+            
+          }
+
+
+
+          function previewFile() {
+              var file = document.getElementById("fileInput").files[0];
+              var preview = document.getElementById("imagePreview");
+              var pdfPreview = document.getElementById("pdfPreview");
+              var fileType = file["type"];
+              var validImageTypes = ["image/jpeg", "image/png", "image/jpg"];
+              var validPdfTypes = ["application/pdf"];
+              var fileName = file.name;
+              var fileExtension = fileName.substr((fileName.lastIndexOf('.') + 1));
+              var reader = new FileReader();
+      
+              if (validImageTypes.includes(fileType) && ["jpeg", "png", "jpg"].includes(fileExtension)) {
+                  preview.style.display = "block";
+                  pdfPreview.style.display = "none";
+                  preview.src = URL.createObjectURL(file);
+              } else if (validPdfTypes.includes(fileType) && fileExtension == "pdf") {
+                  pdfPreview.style.display = "block";
+                  preview.style.display = "none";
+                  pdfPreview.src = URL.createObjectURL(file);
+              } else {
+                  alert("Invalid File Type. Please select a valid image or pdf file.")
+                }
+            }
+
+            
+           
+        </script>
+{% endblock %}
+
+
+
+

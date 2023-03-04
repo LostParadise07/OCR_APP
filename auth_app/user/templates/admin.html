@@ -1,0 +1,67 @@
+{% extends 'navbar.html' %}
+
+{% block body %}
+    <div id="flex">
+        {% for user in users %}
+            {% if user.verified %}
+
+
+            <div class="card"> 
+                <div class="card_img">
+                    <img  class="img-circle" src="../static/profile_pictures/{{user.profile_picture}}" alt="profile picture">
+                </div>
+                <div class="card_info"> <!-- Here I create a New Div for user info with class name card_info -->
+                    <h6 id="name">username: {{user.username}}</h6>
+                        <p id="small" >Email: {{user.email}}</p>
+                        {% if user.id  %}
+                        <form action="{{ url_for('user.make_admin', email=user.email) }}" method="POST">
+                        
+                        {% if user.admin %}
+                        <button class="btn btn-success" id="admin" onclick="return confirm('Are you sure you want to Remove him as Admin?');">Remove Admin</button>
+                        {% else %}
+                        <button class="btn btn-danger" id="admin" onclick="return confirm('Are you sure you want to make him Admin?');">Make Admin</button>
+                        {% endif %}
+                       
+                    </form>
+                    {% endif %}
+                </div>
+                {% if user.id %}
+                <form action="{{ url_for('user.remove', email=user.email) }}" method="POST">
+                    {{ form.hidden_tag() }}
+                    {{ form.submit(class="btn btn-danger", id="verify") }}
+                </form>
+                {% if user.enabled %}
+                    <form action="{{ url_for('user.restrict_user', email=user.email) }}" method="POST" id="restrict-form">
+                        <button id="restrict-button" class="btn btn-success">Disable User</button>
+                    </form>
+                {% else %}
+                    <form action="{{ url_for('user.restrict_user', email=user.email) }}" method="POST" id="restrict-form">
+                        <button id="restrict-button" class="btn btn-danger">Enable User</button>
+                    </form>
+                {% endif %}
+                  
+
+            {% endif %}
+
+                
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <script>
+        function toggleButton() {
+            var switchBtn = document.getElementById("switch");
+            var form = document.getElementById("restrict-form");
+            if (switchBtn.checked) {
+                switchBtn.checked = false;
+                
+            } else {
+                switchBtn.checked = true;
+                
+            }
+            form.submit();
+        }
+    </script>
+    
+
+{% endblock %}

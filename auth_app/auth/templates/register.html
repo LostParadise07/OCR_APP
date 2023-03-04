@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="align-items-center container1">
+    <div class="wrapper wrapper1" style="background-color: rgb(252, 231, 206);" >
+      <ul>
+        <li>
+            This website uses cookies to manage login credentials.
+        </li>
+        <br>
+        <li>
+            This service is part of a research and development process. It does not provide any guaranty of accuracy or timeliness of performance.
+        </li>
+        <br>
+        <li>
+            The images uploaded by the user and the corrections entered by the user to the predicted text will be stored in the website server for further research and development by the developers of the website. Such information will not be shared with any third party.
+        </li>
+      </ul>
+    </div>
+</div>
+    <div class="container wrapper">
+        <form method="POST">
+            {{ form.hidden_tag() }}
+
+            <legend id="ress" class="title mb-4 border-bottom title">Registration Form</legend>
+            <i class="fas fa-user-plus fa-3x"  > Only Admin Can Give You Acess</i>
+            <div class="form-group my-4">
+                {{ form.username.label(class="form-label") }}
+                {% if form.username.errors %}
+                    {{ form.username(class="form-control is-invalid") }}
+                    {% for error in form.username.errors %}
+                        <span class="invalid-feedback">{{ error }}</span>
+                    {% endfor %}
+                {% else %}
+                    {{ form.username(class="form-control") }}
+                {% endif %}
+            </div>
+
+            <div class="form-group my-4">
+                {{ form.email.label(class="form-label") }}
+                {% if form.email.errors %}
+                    {{ form.email(class="form-control is-invalid") }}
+                    {% for error in form.email.errors %}
+                        <span class="invalid-feedback">{{ error }}</span>
+                    {% endfor %}
+                {% else %}
+                    {{ form.email(class="form-control") }}
+                {% endif %}
+            </div>
+
+            <div class="form-group my-4">
+                {{ form.password.label(class="form-label") }}
+                {% if form.password.errors %}
+                    {{ form.password(class="form-control is-invalid") }}
+                    {% for error in form.password.errors %}
+                        <span class="invalid-feedback">{{ error }}</span>
+                    {% endfor %}
+                {% else %}
+                    {{ form.password(class="form-control") }}
+                {% endif %}
+            </div>
+
+            <div class="form-group my-4">
+                {{ form.confirm_password.label(class="form-label") }}
+                {% if form.confirm_password.errors %}
+                    {{ form.confirm_password(class="form-control is-invalid") }}
+                    {% for error in form.confirm_password.errors %}
+                        <span class="invalid-feedback">{{ error }}</span>
+                    {% endfor %}
+                {% else %}
+                    {{ form.confirm_password(class="form-control") }}
+                {% endif %}
+            </div>
+            <div class="form-group my-4 form-label">
+                {{ form.accept(class="form-check-input") }}
+                {{ form.accept.label(class="form-check-label") }}
+            </div>
+            <div class="form-group my-4">
+                {{ form.submit( class="btn btnn btn-primary") }}
+            </div>
+        </form>
+    </div>
+{% endblock %}

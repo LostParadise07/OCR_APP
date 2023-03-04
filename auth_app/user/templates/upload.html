@@ -1,0 +1,141 @@
+{% extends 'navbar.html' %}
+
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="http://127.0.0.1:5000/static/style.css">
+{% endblock %}
+{% block body %}
+<div class="parent"> 
+  <div class="row justify-content-center">
+
+    <div class="col-sm-5">
+      <div style="position: relative;">
+        <!-- <canvas id="myCanvas" style="position: absolute; left: 0; top: 0;"></canvas> -->
+        <img src="{{ url_for('static', filename='uploads/'+ message.image_name  ) }}" class="img-fluid" id="myImage" alt="image">
+      </div>
+    </div>
+
+    <div class="col-sm-5">
+      <form action="{{ url_for('user.choose_option',id=message.id) }}" method="post" id="history-table">
+        <table  class="table table-responsive">
+          {% for imagesegment in imagesegments %}
+          <tr id="tablecol">
+            <td id="tablerow">
+              <input  type="radio" name="segment_selected" id="{{ imagesegment.id }}" value="{{ imagesegment.id }}" onclick="enableTextInput(this)">
+            </td>
+            <td id="tablerow" dir="rtl">
+              <input  type="text" class="form-control" name="new_text_{{ imagesegment.id }}" value="{{imagesegment.text_modified}}" disabled>
+            </td>
+            
+          </tr>
+          {% endfor %}
+        </table>
+        <div>
+          <button type="submit" id="savebtn" name="action" value="save" class="btn btn-primary" onclick="return confirm('Are you sure you want to save the changes?');">Save</button>
+          <button type="submit" id="deletebtn" name="action" value="delete" class="btn btn-primary" onclick="return confirm('Are you sure you want to delete the selected segment?');">Delete</button>
+          <button type="submit" id="moveup" name="action" value="moveup" class="btn btn-primary" >Move <b style="font-size: larger;" >&#11014;</b> </button>
+          <button type="submit" id="movedown" name="action" value="movedown" class="btn btn-primary" >Move <b style="font-size: larger;" >&#11015;</b> </button>
+        </div>
+      </form> 
+    </div>
+  </div>
+</div>
+
+<div class="d-flex justify-content-center">
+  <div class="d-flex">
+
+    <button type="submit" id="download-btn" class="btn  btn-primary" style="font-size: 15px;">Download</button>
+
+    <form class="d-flex"  action="{{ url_for('user.navigate',id=message.id) }}" method="post">
+      <button type="submit" name="direction" value="prev" id="Prev" class="btn">Prev</button>
+      <button type="submit" name="direction" value="next" id="Next" class="btn">Next</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  
+  
+  function initDrawing() {
+    // Get a reference to the image and canvas elements
+    var img = document.getElementById("myImage");
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+  
+    // Set the canvas element's size to match the size of the parent div
+    canvas.width = img.parentElement.offsetWidth;
+    canvas.height = img.parentElement.offsetHeight;
+  
+    // Draw the image onto the canvas
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  
+    // Add event listeners to the canvas element
+    canvas.addEventListener("mousedown", startDraw);
+    canvas.addEventListener("mousemove", continueDraw);
+    canvas.addEventListener("mouseup", endDraw);
+  
+    // Define variables to track the drawing state
+    var isDrawing = false;
+  
+    function startDraw(e) {
+      isDrawing = true;
+      var x = e.clientX - canvas.getBoundingClientRect().left;
+      var y = e.clientY - canvas.getBoundingClientRect().top;
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+    }
+  
+    function continueDraw(e) {
+      if (isDrawing) {
+        var x = e.clientX - canvas.getBoundingClientRect().left;
+        var y = e.clientY - canvas.getBoundingClientRect().top;
+        ctx.lineTo(x, y);
+        ctx.strokeStyle = "white";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
+    }
+  
+    function endDraw() {
+      isDrawing = false;
+    }
+  }
+  
+  // Attach the initDrawing function to the click event of the image element
+  document.getElementById("myImage").addEventListener("click", initDrawing);
+
+
+
+
+  function enableTextInput(radioBtn) {
+    // Find the corresponding text input and enable it
+    var textInput = radioBtn.parentNode.parentNode.querySelector("input[type='text']");
+    textInput.disabled = false;
+  }
+  var downloadBtn = document.getElementById('download-btn');
+  downloadBtn.addEventListener('click', function() {
+    // Get all the input fields and save their values to an array
+var inputs = document.getElementsByTagName('input');
+var values = [];
+for (var i = 0; i < inputs.length; i++) {
+  if (inputs[i].type === 'text') {
+    values.push(inputs[i].value);
+  }
+}
+
+// Convert the values to a string and create a blob
+var text = values.join('\n');
+var blob = new Blob([text], {type: 'text/plain'});
+
+// Create a link to download the file
+var link = document.createElement('a');
+link.download = 'textfile.txt';
+link.href = URL.createObjectURL(blob);
+link.click();
+
+  });
+
+
+
+</script>
+
+{% endblock %}

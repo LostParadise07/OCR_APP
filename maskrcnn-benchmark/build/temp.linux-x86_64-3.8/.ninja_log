@@ -1,0 +1,13 @@
+# ninja log v5
+0	126136	1673890498454143413	/cn-inference/maskrcnn-benchmark/build/temp.linux-x86_64-3.8/cn-inference/maskrcnn-benchmark/maskrcnn_benchmark/csrc/cpu/nms_cpu.o	ca9f069613ca8606
+0	134009	1673890506330133655	/cn-inference/maskrcnn-benchmark/build/temp.linux-x86_64-3.8/cn-inference/maskrcnn-benchmark/maskrcnn_benchmark/csrc/cpu/ROIAlign_cpu.o	2eea6d158fb302f2
+0	156363	1673890528654107288	/cn-inference/maskrcnn-benchmark/build/temp.linux-x86_64-3.8/cn-inference/maskrcnn-benchmark/maskrcnn_benchmark/csrc/vision.o	2bb7ee617d95f886
+5	179775	1673890710369947032	/cn-inference/maskrcnn-benchmark/build/temp.linux-x86_64-3.8/cn-inference/maskrcnn-benchmark/maskrcnn_benchmark/csrc/cpu/ROIAlign_cpu.o	396a490db7886b55
+5	186244	1673890716841942682	/cn-inference/maskrcnn-benchmark/build/temp.linux-x86_64-3.8/cn-inference/maskrcnn-benchmark/maskrcnn_benchmark/csrc/cpu/nms_cpu.o	e7050b4d167dfbf1
+5	217113	1673890747713922881	/cn-inference/maskrcnn-benchmark/build/temp.linux-x86_64-3.8/cn-inference/maskrcnn-benchmark/maskrcnn_benchmark/csrc/vision.o	3e2abb1bec77b8ed
+1	36384	1674208402459762718	/cn_inference/maskrcnn-benchmark/build/temp.linux-x86_64-3.8/cn_inference/maskrcnn-benchmark/maskrcnn_benchmark/csrc/cpu/nms_cpu.o	2ddb8d9599b33f46
+1	48287	1674208414367975386	/cn_inference/maskrcnn-benchmark/build/temp.linux-x86_64-3.8/cn_inference/maskrcnn-benchmark/maskrcnn_benchmark/csrc/cpu/ROIAlign_cpu.o	6d7c3ff70f205258
+1	60831	1674208426928231374	/cn_inference/maskrcnn-benchmark/build/temp.linux-x86_64-3.8/cn_inference/maskrcnn-benchmark/maskrcnn_benchmark/csrc/vision.o	8e7f4b9d14cbd7e5
+29	96619	1674208525007187982	/cn_inference/maskrcnn-benchmark/build/temp.linux-x86_64-3.8/cn_inference/maskrcnn-benchmark/maskrcnn_benchmark/csrc/cpu/ROIAlign_cpu.o	ea2ac25ea982e8f5
+30	100800	1674208529227347998	/cn_inference/maskrcnn-benchmark/build/temp.linux-x86_64-3.8/cn_inference/maskrcnn-benchmark/maskrcnn_benchmark/csrc/cpu/nms_cpu.o	e12089821edea2a4
+29	118433	1674208546880042255	/cn_inference/maskrcnn-benchmark/build/temp.linux-x86_64-3.8/cn_inference/maskrcnn-benchmark/maskrcnn_benchmark/csrc/vision.o	120e0ab7683b08f5
